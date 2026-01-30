@@ -17,7 +17,7 @@ export default function ChatLayout() {
   const navigate = useNavigate();
 
   const [darkMode, setDarkMode] = useState(true);
-  const [sidebarOpen, setSidebarOpen] = useState(false); // mobile default
+  const [sidebarOpen, setSidebarOpen] = useState(true); // ✅ DESKTOP OPEN BY DEFAULT
   const [chats, setChats] = useState([]);
   const [messages, setMessages] = useState([]);
   const [activeChatId, setActiveChatId] = useState(null);
@@ -45,7 +45,6 @@ export default function ChatLayout() {
     setChats(prev => [res.data, ...prev]);
     setActiveChatId(res.data._id);
     setMessages([]);
-    setSidebarOpen(false); // ✅ close drawer on mobile
   };
 
   const openChat = async (chat) => {
@@ -53,7 +52,6 @@ export default function ChatLayout() {
     const res = await getMessages(chat._id);
     setMessages(res.data);
     setMenuOpenId(null);
-    setSidebarOpen(false); // ✅ close drawer on mobile
   };
 
   const sendMessage = async () => {
@@ -79,15 +77,7 @@ export default function ChatLayout() {
     ]);
 
     try {
-      const timeoutPromise = new Promise((_, reject) =>
-        setTimeout(() => reject(new Error("timeout")), 12000)
-      );
-
-      await Promise.race([
-        sendChatMessage(chatId, text),
-        timeoutPromise
-      ]);
-
+      await sendChatMessage(chatId, text);
       const res = await getMessages(chatId);
       setMessages(res.data);
       loadChats();
@@ -98,7 +88,6 @@ export default function ChatLayout() {
           sender: "bot",
           text:
             "⚠️ **Chat limit reached**\n\n" +
-            "This conversation has reached its maximum limit.\n\n" +
             "👉 **Click New Chat to continue**"
         }
       ]);
@@ -148,7 +137,7 @@ export default function ChatLayout() {
             className="menu-btn"
             onClick={(e) => {
               e.stopPropagation();
-              setSidebarOpen(prev => !prev); // ✅ TOGGLE FIX
+              setSidebarOpen(prev => !prev); // ✅ DESKTOP FIX
             }}
           >
             ☰
@@ -218,14 +207,6 @@ export default function ChatLayout() {
           </div>
         </div>
       </aside>
-
-      {/* MOBILE OVERLAY */}
-      {sidebarOpen && (
-        <div
-          className="sidebar-overlay"
-          onClick={() => setSidebarOpen(false)}
-        />
-      )}
 
       {/* MAIN */}
       <main className="chat-area">

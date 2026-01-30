@@ -662,17 +662,21 @@ select {
     z-index: 1000;
   }
 }
-/* ===== DESKTOP SIDEBAR CLOSE FIX (NO MOBILE CHANGES) ===== */
+
+
+
+/* ===== DESKTOP SIDEBAR FIX (DO NOT TOUCH OTHER STYLES) ===== */
+
+/* Desktop: fully hide sidebar when collapsed */
 @media (min-width: 769px) {
-  .sidebar {
-    transform: none !important;
-    position: relative;
+  .sidebar.collapsed {
+    width: 0 !important;
+    padding: 0 !important;
+    overflow: hidden;
   }
 
-  .sidebar.collapsed {
-  width: 0;
-  padding: 0;
-  overflow: hidden;
-}
-
+  .sidebar.collapsed .sidebar-top,
+  .sidebar.collapsed .sidebar-content {
+    display: none;
+  }
 }
