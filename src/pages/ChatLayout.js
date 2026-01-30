@@ -17,7 +17,7 @@ export default function ChatLayout() {
   const navigate = useNavigate();
 
   const [darkMode, setDarkMode] = useState(true);
-  const [sidebarOpen, setSidebarOpen] = useState(false); // ✅ closed by default for mobile
+  const [sidebarOpen, setSidebarOpen] = useState(false); // mobile default
   const [chats, setChats] = useState([]);
   const [messages, setMessages] = useState([]);
   const [activeChatId, setActiveChatId] = useState(null);
@@ -45,7 +45,7 @@ export default function ChatLayout() {
     setChats(prev => [res.data, ...prev]);
     setActiveChatId(res.data._id);
     setMessages([]);
-    setSidebarOpen(false); // ✅ close sidebar on mobile
+    setSidebarOpen(false); // ✅ close drawer on mobile
   };
 
   const openChat = async (chat) => {
@@ -53,7 +53,7 @@ export default function ChatLayout() {
     const res = await getMessages(chat._id);
     setMessages(res.data);
     setMenuOpenId(null);
-    setSidebarOpen(false); // ✅ close sidebar on mobile
+    setSidebarOpen(false); // ✅ close drawer on mobile
   };
 
   const sendMessage = async () => {
@@ -148,7 +148,7 @@ export default function ChatLayout() {
             className="menu-btn"
             onClick={(e) => {
               e.stopPropagation();
-              setSidebarOpen(true);
+              setSidebarOpen(prev => !prev); // ✅ TOGGLE FIX
             }}
           >
             ☰
@@ -219,7 +219,7 @@ export default function ChatLayout() {
         </div>
       </aside>
 
-      {/* ✅ MOBILE OVERLAY */}
+      {/* MOBILE OVERLAY */}
       {sidebarOpen && (
         <div
           className="sidebar-overlay"

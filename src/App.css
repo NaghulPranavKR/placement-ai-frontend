@@ -15,17 +15,21 @@ body {
 .app.dark { background: #020617; color: white; }
 .app.light { background: #ffffff; color: #111827; }
 
-/* SIDEBAR */
+/* ================= SIDEBAR (DESKTOP) ================= */
 .sidebar {
   width: 260px;
   background: #020617;
   padding: 14px;
-  transition: width 0.3s ease;
+  box-shadow: 6px 0 18px rgba(0, 0, 0, 0.35);
 }
 
-.sidebar.collapsed { width: 80px; }
+.sidebar.collapsed {
+  width: 80px;
+}
 
-.app.light .sidebar { background: #f3f4f6; }
+.app.light .sidebar {
+  background: #f3f4f6;
+}
 
 /* SIDEBAR TOP */
 .sidebar-top {
@@ -49,12 +53,6 @@ body {
   display: flex;
   align-items: center;
   gap: 10px;
-  margin-left: 6px;
-  transition: margin-left 0.3s ease;
-}
-
-.sidebar.collapsed .brand {
-  margin-left: 16px; /* moves icon right when collapsed */
 }
 
 .brand-icon {
@@ -65,11 +63,11 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 16px;
-  box-shadow: 0 4px 10px rgba(99,102,241,.35);
 }
 
-.brand-name { font-weight: 600; }
+.brand-name {
+  font-weight: 600;
+}
 
 /* SEARCH */
 .search {
@@ -86,19 +84,7 @@ body {
   max-height: calc(100vh - 200px);
 }
 
-.chat-item {
-  padding: 10px;
-  border-radius: 10px;
-  cursor: pointer;
-  margin-bottom: 6px;
-}
-
-.chat-item.active {
-  background: linear-gradient(135deg, #6366f1, #8b5cf6);
-  color: white;
-}
-
-/* MAIN */
+/* ================= MAIN ================= */
 .chat-area {
   flex: 1;
   display: flex;
@@ -121,31 +107,16 @@ body {
   font-weight: 600;
   cursor: pointer;
   border: none;
-  transition: transform .2s, box-shadow .2s;
 }
 
 .btn.primary {
   background: linear-gradient(135deg, #6366f1, #8b5cf6);
   color: white;
-  box-shadow: 0 10px 22px rgba(99,102,241,.35);
 }
 
 .btn.secondary {
-  background: #e5e7eb;
-}
-
-.app.dark .btn.secondary {
-  background: rgba(255,255,255,.08);
+  background: rgba(255,255,255,0.08);
   color: white;
-}
-
-.btn.send {
-  background: linear-gradient(135deg, #22c55e, #4ade80);
-  color: #022c22;
-}
-
-.btn:hover {
-  transform: translateY(-2px);
 }
 
 /* CHAT */
@@ -153,6 +124,9 @@ body {
   flex: 1;
   padding: 20px;
   overflow-y: auto;
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 18px;
+  margin: 12px 16px;
 }
 
 .msg {
@@ -175,10 +149,6 @@ body {
 }
 
 .bot .bubble {
-  background: #e5e7eb;
-}
-
-.app.dark .bot .bubble {
   background: #1f2937;
   color: white;
 }
@@ -189,6 +159,7 @@ body {
   gap: 10px;
   padding: 16px;
   border-top: 1px solid rgba(0,0,0,.1);
+  background: rgba(255,255,255,0.04);
 }
 
 .input-area input {
@@ -197,455 +168,34 @@ body {
   border-radius: 14px;
   border: none;
   outline: none;
+  font-size: 16px;
 }
 
-/* RESPONSIVE */
-@media (max-width: 768px) {
-  .sidebar { position: absolute; z-index: 10; height: 100%; }
-  .sidebar.collapsed { transform: translateX(-100%); }
-  .top-bar { justify-content: space-between; }
-}
-
-/* AUTH PAGES */
-.auth-container {
-  height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: radial-gradient(circle at top, #1e293b, #020617);
-}
-
-.auth-card {
-  width: 360px;
-  background: rgba(17, 24, 39, 0.95);
-  padding: 30px;
-  border-radius: 18px;
-  box-shadow: 0 20px 40px rgba(0,0,0,.5);
-  text-align: center;
-}
-
-.app.light .auth-container {
-  background: #f3f4f6;
-}
-
-.app.light .auth-card {
-  background: white;
-}
-
-.auth-card h2 {
-  margin-bottom: 6px;
-}
-
-.auth-subtitle {
-  font-size: 14px;
-  opacity: 0.7;
-  margin-bottom: 16px;
-}
-
-.auth-card input {
-  width: 100%;
-  padding: 12px;
-  border-radius: 12px;
-  border: none;
-  margin-bottom: 12px;
-  outline: none;
-}
-
-.auth-error {
-  color: #ef4444;
-  margin-bottom: 10px;
-  font-size: 14px;
-}
-
-.btn.full {
-  width: 100%;
-}
-
-.auth-switch {
-  margin-top: 14px;
-  font-size: 14px;
-}
-
-.auth-switch a {
-  color: #6366f1;
-  text-decoration: none;
-  font-weight: 600;
-}
-.auth-success {
-  color: #22c55e;
-  background: rgba(34, 197, 94, 0.12);
-  padding: 10px;
-  border-radius: 10px;
-  margin-bottom: 12px;
-  font-size: 14px;
-}
-.auth-brand {
-  text-align: center;
-  margin-bottom: 18px;
-}
-
-.auth-brand h1 {
-  font-size: 28px;
-  font-weight: 700;
-  background: linear-gradient(135deg, #6366f1, #8b5cf6);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-.auth-brand p {
-  font-size: 14px;
-  opacity: 0.75;
-  margin-top: 4px;
-}
-
-.brand-header {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-  margin-bottom: 8px;
-}
-
-/* Emoji stays NORMAL */
-.brand-emoji {
-  font-size: 32px;
-}
-
-/* Gradient ONLY for text */
-.brand-text {
-  font-size: 28px;
-  font-weight: 700;
-  background: linear-gradient(135deg, #6366f1, #8b5cf6);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-/* MARKDOWN AI RESPONSE STYLING */
-.markdown h1,
-.markdown h2,
-.markdown h3 {
-  margin: 10px 0;
-  font-weight: 700;
-}
-
-.markdown ul {
-  margin-left: 20px;
-}
-
-.markdown li {
-  margin-bottom: 6px;
-}
-
-.markdown p {
-  margin: 8px 0;
-  line-height: 1.6;
-}
-
-.markdown strong {
-  color: #a78bfa;
-}
-.chat-item {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 10px 12px;
-  border-radius: 8px;
-  cursor: pointer;
-  position: relative;
-}
-
-.chat-item:hover {
-  background: rgba(255, 255, 255, 0.06);
-}
-
-.chat-item.active {
-  background: rgba(124, 58, 237, 0.25);
-}
-.menu-dots {
-  background: none;
-  border: none;
-  color: #aaa;
-  font-size: 20px;
-  cursor: pointer;
-  padding: 0 6px;
-}
-
-.menu-dots:hover {
-  color: white;
-}
-
-.menu-dropdown {
-  position: absolute;
-  right: 10px;
-  top: 38px;
-  background: #111827;
-  border-radius: 8px;
-  min-width: 120px;
-  box-shadow: 0 8px 20px rgba(0,0,0,0.35);
-  z-index: 1000;
-  overflow: hidden;
-}
-
-.menu-dropdown button {
-  width: 100%;
-  background: none;
-  border: none;
-  padding: 10px 14px;
-  color: white;
-  text-align: left;
-  cursor: pointer;
-  font-size: 14px;
-}
-
-.menu-dropdown button:hover {
-  background: rgba(255,255,255,0.08);
-}
-.menu-dropdown .danger {
-  color: #f87171;
-}
-
-.menu-dropdown .danger:hover {
-  background: rgba(248,113,113,0.15);
-}
-.bubble.markdown h1,
-.bubble.markdown h2,
-.bubble.markdown h3 {
-  margin: 10px 0 6px;
-  font-weight: 600;
-}
-
-.bubble.markdown ul {
-  padding-left: 20px;
-  margin: 8px 0;
-}
-
-.bubble.markdown li {
-  margin-bottom: 6px;
-}
-
-.bubble.markdown p {
-  margin-bottom: 8px;
-  line-height: 1.6;
-}
-.chat-menu {
-  display: flex;
-  align-items: center;
-}
-.welcome-box {
-  padding: 24px;
-  margin: 20px;
-  border-radius: 18px;
-  background: linear-gradient(
-    135deg,
-    rgba(99,102,241,0.18),
-    rgba(139,92,246,0.18)
-  );
-  backdrop-filter: blur(12px);
-  animation: floatIn 0.6s ease;
-}
-
-.floating {
-  animation: floatUp 4s ease-in-out infinite;
-}
-
-@keyframes floatIn {
-  from {
-    opacity: 0;
-    transform: translateY(15px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes floatUp {
-  0% { transform: translateY(0); }
-  50% { transform: translateY(-6px); }
-  100% { transform: translateY(0); }
-}
 .send-btn {
   width: 48px;
   height: 48px;
   border-radius: 50%;
   border: none;
   cursor: pointer;
-
   background: linear-gradient(135deg, #6366f1, #8b5cf6);
   color: white;
-  font-size: 20px;
-  font-weight: bold;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  box-shadow: 0 10px 25px rgba(99,102,241,0.45);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-.send-btn:hover {
-  transform: translateY(-2px) scale(1.05);
-  box-shadow: 0 15px 35px rgba(99,102,241,0.6);
-}
-
-.send-btn:active {
-  transform: scale(0.95);
-}
-/* ================= VISUAL SEPARATION PATCH ================= */
-
-/* Slight contrast for chat area */
-.chat-area {
-  background: linear-gradient(
-    180deg,
-    rgba(255,255,255,0.02),
-    rgba(255,255,255,0.01)
-  );
-}
-
-/* Clear divider between sidebar and chat */
-.sidebar {
-  box-shadow: 6px 0 18px rgba(0, 0, 0, 0.35);
-}
-
-/* Give messages area a floating panel feel */
-.messages {
-  background: rgba(255, 255, 255, 0.03);
-  border-radius: 18px;
-  margin: 12px 16px;
-  padding: 22px;
-}
-
-/* Slight elevation for welcome box */
-.welcome-box {
-  box-shadow: 0 12px 30px rgba(0,0,0,0.35);
-}
-
-/* Input area separated like a dock */
-.input-area {
-  background: rgba(255,255,255,0.04);
-  backdrop-filter: blur(8px);
-}
-
-/* Make sidebar items feel contained */
-.chat-list {
-  padding-right: 6px;
-}
-
-/* Optional: softer scrollbar contrast */
-.chat-list::-webkit-scrollbar {
-  width: 6px;
-}
-
-.chat-list::-webkit-scrollbar-thumb {
-  background: rgba(255,255,255,0.15);
-  border-radius: 10px;
-}
-.sidebar-content.closed {
-  display: none;
-}
-/* ================= MOBILE FIXES ================= */
-/* ================= FINAL MOBILE FIX ================= */
+/* ================= MOBILE ONLY ================= */
 @media (max-width: 768px) {
 
-  /* App should not behave like desktop flex */
   .app {
     display: block;
     height: 100dvh;
     overflow: hidden;
   }
 
-  /* Sidebar as proper mobile drawer */
+  /* MOBILE SIDEBAR DRAWER */
   .sidebar {
     position: fixed;
     top: 0;
     left: 0;
     height: 100%;
-    width: 260px;
-    z-index: 1000;
-    transform: translateX(0);
-    transition: transform 0.3s ease;
-  }
-
-  .sidebar.collapsed {
-    transform: translateX(-100%);
-  }
-
-  /* Remove ghost sidebar content */
-  .sidebar-content.closed {
-    display: none;
-  }
-
-  /* Chat area full width */
-  .chat-area {
-    width: 100%;
-    margin-left: 0;
-  }
-
-  /* Top bar compact */
-  .top-bar {
-    justify-content: space-between;
-    padding: 8px 10px;
-    gap: 6px;
-  }
-
-  .top-bar .btn {
-    padding: 6px 10px;
-    font-size: 13px;
-  }
-
-  /* Messages area */
-  .messages {
-    margin: 6px;
-    padding: 12px;
-    border-radius: 12px;
-  }
-
-  /* Chat bubbles */
-  .bubble {
-    max-width: 88%;
-    padding: 12px 16px;
-    font-size: 14px;
-  }
-
-  /* Input dock */
-  .input-area {
-    padding: 8px;
-    gap: 8px;
-  }
-
-  .input-area input {
-    padding: 12px;
-    font-size: 16px; /* important for iOS */
-  }
-
-  /* Send button */
-  .send-btn {
-    width: 44px;
-    height: 44px;
-    font-size: 18px;
-  }
-
-  /* Auth card */
-  .auth-card {
-    width: 90%;
-    max-width: 360px;
-    padding: 22px;
-  }
-
-  /* Welcome box */
-  .welcome-box {
-    margin: 12px;
-    padding: 18px;
-  }
-}
-/* Prevent iOS auto-zoom on input focus */
-input,
-textarea,
-select {
-  font-size: 16px;
-}
-@media (max-width: 768px) {
-  .sidebar {
     transform: translateX(-100%);
     transition: transform 0.3s ease;
     z-index: 1001;
@@ -655,10 +205,30 @@ select {
     transform: translateX(0);
   }
 
+  /* Overlay */
   .sidebar-overlay {
     position: fixed;
     inset: 0;
     background: rgba(0,0,0,0.45);
     z-index: 1000;
+  }
+
+  /* Full-width chat */
+  .chat-area {
+    width: 100%;
+  }
+
+  .messages {
+    margin: 8px;
+    padding: 12px;
+  }
+
+  .bubble {
+    max-width: 88%;
+  }
+
+  .top-bar {
+    justify-content: space-between;
+    padding: 8px 10px;
   }
 }
