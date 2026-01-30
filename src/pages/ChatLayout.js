@@ -17,7 +17,7 @@ export default function ChatLayout() {
   const navigate = useNavigate();
 
   const [darkMode, setDarkMode] = useState(true);
-  const [sidebarOpen, setSidebarOpen] = useState(true);
+  const [sidebarOpen, setSidebarOpen] = useState(false); // ✅ closed by default for mobile
   const [chats, setChats] = useState([]);
   const [messages, setMessages] = useState([]);
   const [activeChatId, setActiveChatId] = useState(null);
@@ -45,6 +45,7 @@ export default function ChatLayout() {
     setChats(prev => [res.data, ...prev]);
     setActiveChatId(res.data._id);
     setMessages([]);
+    setSidebarOpen(false); // ✅ close sidebar on mobile
   };
 
   const openChat = async (chat) => {
@@ -52,9 +53,9 @@ export default function ChatLayout() {
     const res = await getMessages(chat._id);
     setMessages(res.data);
     setMenuOpenId(null);
+    setSidebarOpen(false); // ✅ close sidebar on mobile
   };
 
-  /* 🚨 SAFE SEND MESSAGE (ANTI FREEZE) */
   const sendMessage = async () => {
     if (!message.trim()) return;
 
@@ -141,22 +142,25 @@ export default function ChatLayout() {
       onClick={() => setMenuOpenId(null)}
     >
       {/* SIDEBAR */}
-      <aside className={`sidebar ${sidebarOpen ? "" : "collapsed"}`}>
+      <aside className={`sidebar ${sidebarOpen ? "open" : "collapsed"}`}>
         <div className="sidebar-top">
           <button
             className="menu-btn"
-            onClick={() => setSidebarOpen(!sidebarOpen)}
+            onClick={(e) => {
+              e.stopPropagation();
+              setSidebarOpen(true);
+            }}
           >
             ☰
           </button>
+
           <div className="brand">
             <div className="brand-icon">🤖</div>
             <span className="brand-name">Placement AI</span>
           </div>
         </div>
 
-        {/* 🔥 FIXED SIDEBAR CONTENT */}
-        <div className={`sidebar-content ${sidebarOpen ? "open" : "closed"}`}>
+        <div className="sidebar-content">
           <input
             className="search"
             placeholder="Search chats..."
@@ -180,7 +184,6 @@ export default function ChatLayout() {
                     💬 {chat.title || "New Chat"}
                   </span>
 
-                  {/* ⋯ MENU RESTORED */}
                   <div
                     className="chat-menu"
                     onClick={e => e.stopPropagation()}
@@ -215,6 +218,14 @@ export default function ChatLayout() {
           </div>
         </div>
       </aside>
+
+      {/* ✅ MOBILE OVERLAY */}
+      {sidebarOpen && (
+        <div
+          className="sidebar-overlay"
+          onClick={() => setSidebarOpen(false)}
+        />
+      )}
 
       {/* MAIN */}
       <main className="chat-area">
