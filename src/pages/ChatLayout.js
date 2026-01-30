@@ -17,7 +17,7 @@ export default function ChatLayout() {
   const navigate = useNavigate();
 
   const [darkMode, setDarkMode] = useState(true);
-  const [sidebarOpen, setSidebarOpen] = useState(true); // ✅ DESKTOP OPEN BY DEFAULT
+  const [sidebarOpen, setSidebarOpen] = useState(true);
   const [chats, setChats] = useState([]);
   const [messages, setMessages] = useState([]);
   const [activeChatId, setActiveChatId] = useState(null);
@@ -54,6 +54,7 @@ export default function ChatLayout() {
     setMenuOpenId(null);
   };
 
+  /* 🚨 SAFE SEND MESSAGE (ANTI FREEZE) */
   const sendMessage = async () => {
     if (!message.trim()) return;
 
@@ -77,7 +78,15 @@ export default function ChatLayout() {
     ]);
 
     try {
-      await sendChatMessage(chatId, text);
+      const timeoutPromise = new Promise((_, reject) =>
+        setTimeout(() => reject(new Error("timeout")), 12000)
+      );
+
+      await Promise.race([
+        sendChatMessage(chatId, text),
+        timeoutPromise
+      ]);
+
       const res = await getMessages(chatId);
       setMessages(res.data);
       loadChats();
@@ -88,6 +97,7 @@ export default function ChatLayout() {
           sender: "bot",
           text:
             "⚠️ **Chat limit reached**\n\n" +
+            "This conversation has reached its maximum limit.\n\n" +
             "👉 **Click New Chat to continue**"
         }
       ]);
@@ -131,25 +141,22 @@ export default function ChatLayout() {
       onClick={() => setMenuOpenId(null)}
     >
       {/* SIDEBAR */}
-      <aside className={`sidebar ${sidebarOpen ? "open" : "collapsed"}`}>
+      <aside className={`sidebar ${sidebarOpen ? "" : "collapsed"}`}>
         <div className="sidebar-top">
           <button
             className="menu-btn"
-            onClick={(e) => {
-              e.stopPropagation();
-              setSidebarOpen(prev => !prev); // ✅ DESKTOP FIX
-            }}
+            onClick={() => setSidebarOpen(!sidebarOpen)}
           >
             ☰
           </button>
-
           <div className="brand">
             <div className="brand-icon">🤖</div>
             <span className="brand-name">Placement AI</span>
           </div>
         </div>
 
-        <div className="sidebar-content">
+        {/* 🔥 FIXED SIDEBAR CONTENT */}
+        <div className={`sidebar-content ${sidebarOpen ? "open" : "closed"}`}>
           <input
             className="search"
             placeholder="Search chats..."
@@ -173,6 +180,7 @@ export default function ChatLayout() {
                     💬 {chat.title || "New Chat"}
                   </span>
 
+                  {/* ⋯ MENU RESTORED */}
                   <div
                     className="chat-menu"
                     onClick={e => e.stopPropagation()}
