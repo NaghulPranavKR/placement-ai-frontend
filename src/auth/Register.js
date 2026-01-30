@@ -3,17 +3,31 @@ import { useNavigate, Link } from "react-router-dom";
 import API from "../api/api";
 
 const Register = () => {
-  const [form, setForm] = useState({ name: "", email: "", password: "" });
+  const [form, setForm] = useState({
+    name: "",
+    email: "",
+    password: ""
+  });
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
   const submit = async (e) => {
     e.preventDefault();
-    setError("");
-    try {
-      await API.post("/api/auth/register", form);
 
-      // ✅ Redirect with success message
+    // 🔍 DEBUG LOGS (VERY IMPORTANT)
+    console.log("REGISTER CLICKED");
+    console.log("FORM DATA:", form);
+    console.log("API BASE URL:", process.env.REACT_APP_API_URL);
+
+    setError("");
+
+    try {
+      console.log("BEFORE API CALL");
+
+      const res = await API.post("/api/auth/register", form);
+
+      console.log("REGISTER RESPONSE:", res.data);
+
       navigate("/login", {
         state: {
           success:
@@ -21,6 +35,7 @@ const Register = () => {
         }
       });
     } catch (err) {
+      console.error("REGISTER ERROR:", err);
       setError(err.response?.data?.message || "Registration failed");
     }
   };
@@ -28,12 +43,12 @@ const Register = () => {
   return (
     <div className="auth-container">
       <div className="auth-card">
-        {/* 🔷 BRAND HEADER */}
+        {/* BRAND */}
         <div className="auth-brand">
           <div className="brand-header">
             <span className="brand-emoji">🤖</span>
             <h1 className="brand-text">Placement AI</h1>
-        </div>
+          </div>
 
           <p>
             An intelligent AI assistant designed to guide users through career
@@ -48,6 +63,7 @@ const Register = () => {
 
         <form onSubmit={submit}>
           <input
+            type="text"
             placeholder="Name"
             value={form.name}
             onChange={(e) =>
@@ -55,7 +71,9 @@ const Register = () => {
             }
             required
           />
+
           <input
+            type="email"
             placeholder="Email"
             value={form.email}
             onChange={(e) =>
@@ -63,6 +81,7 @@ const Register = () => {
             }
             required
           />
+
           <input
             type="password"
             placeholder="Password"
@@ -73,7 +92,10 @@ const Register = () => {
             required
           />
 
-          <button className="btn primary full">Register</button>
+          {/* IMPORTANT: force submit */}
+          <button type="submit" className="btn primary full">
+            Register
+          </button>
         </form>
 
         <p className="auth-switch">

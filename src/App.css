@@ -543,3 +543,82 @@ body {
 .sidebar-content.closed {
   display: none;
 }
+/* ================= MOBILE FIXES ================= */
+@media (max-width: 768px) {
+
+  /* Fix viewport height issues */
+  .app {
+    height: 100dvh;
+    overflow: hidden;
+  }
+
+  /* Sidebar behaves like drawer */
+  .sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 260px;
+    transform: translateX(0);
+    z-index: 100;
+  }
+
+  .sidebar.collapsed {
+    transform: translateX(-100%);
+  }
+
+  /* Chat area takes full width */
+  .chat-area {
+    width: 100%;
+  }
+
+  /* Reduce message padding */
+  .messages {
+    margin: 8px;
+    padding: 14px;
+    border-radius: 14px;
+  }
+
+  /* Message bubbles better for mobile */
+  .bubble {
+    max-width: 88%;
+    padding: 12px 16px;
+    font-size: 14px;
+  }
+
+  /* Input area compact */
+  .input-area {
+    padding: 10px;
+    gap: 8px;
+  }
+
+  .input-area input {
+    padding: 12px;
+    font-size: 14px;
+  }
+
+  /* Buttons smaller */
+  .btn {
+    padding: 8px 14px;
+    font-size: 14px;
+  }
+
+  /* Auth card responsive */
+  .auth-card {
+    width: 90%;
+    max-width: 360px;
+    padding: 24px;
+  }
+
+  /* Welcome box spacing */
+  .welcome-box {
+    margin: 12px;
+    padding: 18px;
+  }
+
+  /* Top bar spacing */
+  .top-bar {
+    padding: 10px 12px;
+  }
+}
+
